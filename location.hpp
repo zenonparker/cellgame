@@ -32,7 +32,7 @@ bool operator<(const Location& l1, const Location& l2) {
 }
 
 std::ostream& operator<<(std::ostream& out, const Location& l) {
-  out << "(" << l.x << ", " << l.y << ")";
+  return out << "(" << l.x << ", " << l.y << ")";
 }
 
 } // end namespace cell
