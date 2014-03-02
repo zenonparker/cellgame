@@ -18,7 +18,7 @@ namespace cell {
 class Scan {
 public:
   /// Number of rings of influence in a given Scan.
-  constexpr static int NUM_RINGS = 2;
+  CONSTVAL_PF int NUM_RINGS = 2;
 
   // Constructors
   Scan() { }

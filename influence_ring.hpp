@@ -13,16 +13,19 @@
 #ifndef CELL_INFLUENCE_RING_HPP
 #define CELL_INFLUENCE_RING_HPP
 
+#include <limits>
+#include <cpp11_polyfill.hpp>
+
 namespace cell {
 
 class InfluenceRing {
 public:
   /// Number of directions in this influence ring: North, North East, East, etc...
-  constexpr static int NUM_DIRECTIONS = 8;
+  static CONSTVAL_PF int NUM_DIRECTIONS = 8;
 
   /// The max value for influence in any given direction.
   /// Influence will be in the range [0, MAX_INFLUENCE]
-  constexpr static int MAX_INFLUENCE = std::numeric_limits<int>::max();
+  CONSTVAL_PF int MAX_INFLUENCE = std::numeric_limits<int>::max();
 
   // Constructors
   InfluenceRing() { }

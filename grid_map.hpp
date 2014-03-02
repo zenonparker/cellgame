@@ -19,25 +19,35 @@ namespace cell {
 
 	template<class T>
 	class GridMap {
+	public:
 		void insert(const Location &l, const T &t);
-		void erase(const Location &l, const T &t);
-		std::vector<T> find(const Location &l, const location &l2);
-		T find(const Location &l);
+		void erase(const Location &l);
+		std::vector<T> find(const Location &l1, const Location &l2);
 	private:
 		std::map<Location,T> grid_map_;
 	};
 
 	template<class T>
-	void GridMap<T>::add(const Location &l, const T &t) {
-
+	void GridMap<T>::insert(const Location &l, const T &t) {
+		grid_map_.emplace(l, t);
 	}
 
 	template<class T>
-	void GridMap<T>::remove(const Location &l, const T &t) {
+	void GridMap<T>::erase(const Location &l) {
+		grid_map_.erase(l);
 	}
 
 	template<class T>
-	std::vector<T> GridMap<T>::between(const Location &l, const location &l2) {
+	std::vector<T> GridMap<T>::find(const Location &l1, const Location &l2) {
+		const auto begin = grid_map_.find(l1);
+		const auto end   = grid_map_.find(l2);
+		std::vector<T> ret;
+		for (auto it = begin; it != end; ++it) {
+			if (it->first.y >= l1.y && it->first.y <= l2.y) {
+				ret.emplace_back(it->second);
+			}
+		}
+		return ret;
 	}
 
 
