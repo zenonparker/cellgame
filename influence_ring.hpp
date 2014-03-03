@@ -15,9 +15,20 @@
 
 #include <limits>
 #include <cpp11_polyfill.hpp>
+#include <climits>
 
 namespace cell {
 
+/** @brief Sections or slices in the InfluenceRing are indexed in the range
+  *        [0, NUM_DIRECTIONS] counter clockwise from the vector (1,0):
+  *
+  *                   Y ^
+  *                     |
+  *                     |
+  *                     |
+  *                     +------> (1,0) X
+  *        
+  */
 class InfluenceRing {
 public:
   /// Number of directions in this influence ring: North, North East, East, etc...
@@ -25,7 +36,8 @@ public:
 
   /// The max value for influence in any given direction.
   /// Influence will be in the range [0, MAX_INFLUENCE]
-  CONSTVAL_PF int MAX_INFLUENCE = std::numeric_limits<int>::max();
+  static CONSTVAL_PF int MAX_INFLUENCE = INT_MAX; 
+  // TODO: WHEN VisualStudio doesn't suck ass: std::numeric_limits<int>::max();
 
   // Constructors
   InfluenceRing() { }
