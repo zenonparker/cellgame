@@ -23,7 +23,7 @@ struct Location {
 };
 
 inline bool Location::between(const Location& top_left, const Location& bottom_right) {
-	return x >= top_left.x && x <= bottom_right.x && y >= top_left.y && y <= bottom_right.y;
+  return x >= top_left.x && x <= bottom_right.x && y >= top_left.y && y <= bottom_right.y;
 }
 
 inline bool operator==(const Location& l1, const Location& l2) {

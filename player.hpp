@@ -19,10 +19,10 @@ typedef int PlayerId;
 
 class Player {
 public:
-	PlayerId& player_id();
-	const PlayerId& player_id() const;
+  PlayerId& player_id();
+  const PlayerId& player_id() const;
 private:
-	PlayerId player_id_;
+  PlayerId player_id_;
 
 };
 

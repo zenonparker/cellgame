@@ -37,22 +37,22 @@ private:
 };
 
 inline void World::player_join(PlayerId id) {
-	players_.emplace(id,Player());
+  players_.emplace(id,Player());
 }
 
 inline void World::player_leave(PlayerId id) {
-	const auto cit = players_.find(id);
-	if (cit != players_.end()) {
-		players_.erase(cit);
-	}
+  const auto cit = players_.find(id);
+  if (cit != players_.end()) {
+    players_.erase(cit);
+  }
 }
 
 inline Grid& World::grid() {
-	return grid_;
+  return grid_;
 }
 
 inline const Grid& World::grid() const {
-	return grid_;
+  return grid_;
 }
 
 } // end namespace cell
