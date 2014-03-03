@@ -26,17 +26,17 @@ inline bool Location::between(const Location& top_left, const Location& bottom_r
 	return x >= top_left.x && x <= bottom_right.x && y >= top_left.y && y <= bottom_right.y;
 }
 
-bool operator==(const Location& l1, const Location& l2) {
+inline bool operator==(const Location& l1, const Location& l2) {
   return (l1.x == l2.x && l1.y == l2.y);
 }
 
-bool operator<(const Location& l1, const Location& l2) {
+inline bool operator<(const Location& l1, const Location& l2) {
   return (l1.x < l2.x ? true :
             l1.x == l2.x && l1.y < l2.y ? true : 
               false);
 }
 
-std::ostream& operator<<(std::ostream& out, const Location& l) {
+inline std::ostream& operator<<(std::ostream& out, const Location& l) {
   return out << "(" << l.x << ", " << l.y << ")";
 
 }
