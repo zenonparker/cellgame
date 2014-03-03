@@ -28,6 +28,9 @@ namespace cell {
   *                     |
   *                     +------> (1,0) X
   *        
+  *        The zeroth slice is the one whose CENTER is the vector (1,0). For
+  *        example in an eight direction ring this would be the slice facing
+  *        directly east.
   */
 class InfluenceRing {
 public:
