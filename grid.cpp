@@ -9,12 +9,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <grid.hpp>
-#include <math>
+#include <math.h>
 
 namespace {
 
 CONSTVAL_PF static double PI = 3.141592653589793238462;
-CONSTVAL_PF static double PI2_BY_DIRS = (PI2 * 2.0) / double(InfluenceRing::NUM_DIRECTIONS * 2);
+CONSTVAL_PF static double PI2_BY_DIRS = (PI * 2.0) / double(cell::InfluenceRing::NUM_DIRECTIONS * 2);
 
 /*
 InfluenceRing doRing(const vector<pair<Location, int>>& locs, const Location& ploc,
@@ -39,16 +39,15 @@ Scan Grid::scan_player(const Player& player) const
 {
   Scan result;
   for (int i = 0; i < Scan::NUM_RINGS; ++i) {
-    result.rings()[i] = scan_ring(player, 
-                                  Scan::RING_RANGES[i*2],
-                                  Scan::RING_RANGES[(i*2)+1]);
+    result.rings()[i] = scan_single_ring(player, 
+                                         Scan::RING_RANGES[i*2],
+                                         Scan::RING_RANGES[(i*2)+1]);
   }
   return result;
 }
 
-// Private
 
-InfluenceRing Scan::scan_ring(const Player& player, int min, int max) const
+InfluenceRing Grid::scan_single_ring(const Player& player, int minDist, int maxDist) const
 {
   InfluenceRing result;
 
@@ -56,9 +55,9 @@ InfluenceRing Scan::scan_ring(const Player& player, int min, int max) const
 
   // Obtain vector of possible rewards based on the rectangle around the player's
   // location that encompasses the largest scan ring.
-  Location bottom_left{ploc.x - max, ploc.y - max};
-  Location top_right{ploc.x + max, ploc.y + max};
-  auto potential_rewards = rewards_.find_with_location(bottom_left, top_right);
+  Location bottom_left{ploc.x - maxDist, ploc.y - maxDist};
+  Location top_right{ploc.x + maxDist, ploc.y + maxDist};
+  auto potential_rewards = rewards_.find(bottom_left, top_right);
 
   for (const auto& reward_pair : potential_rewards) {
     const Location& loc = reward_pair.first;
@@ -69,17 +68,21 @@ InfluenceRing Scan::scan_ring(const Player& player, int min, int max) const
     double dist = sqrt(xd*xd + yd*yd);
 
     if (dist >= double(minDist) && dist <= double(maxDist)) {
-      // Determine which slice of the scan pie this falls into.
+
+      // Satisfied distance contraint, determine which slice of 
+      // the scan pie this rewards falls into.
       double rads = atan2(double(loc.y), double(loc.x));
-      cout << loc << " : " << rads << endl;
-      int slice = (int(rads / PI2_BY_DIRS) + (InfluenceRing::NUM_DIRECTIONS * 2)) % 
-                   (InfluenceRing::NUM_DIRECTIONS * 2);
+      int slice = (int(rads / PI2_BY_DIRS) + 
+                   (InfluenceRing::NUM_DIRECTIONS * 2)) % 
+                    (InfluenceRing::NUM_DIRECTIONS * 2);
+
       // slice is now in range [0, num_dirs*2], actual slice to go in will be
       // ((slice + 1) / 2) % num_dirs
       // For example, slice index 15 = (15 + 1)/2 = 8 % 8 = zeroth slice. (east)
       //              slice index 0 = (0 + 1)/2 = 0.5 % 8 = zeroth slice. (east)
       //              slice index 1 = (1 + 1)/2 = 1 % 8 = index 1 slice (north-east)
-      ir1.vals()[((slice + 1) / 2) % InfluenceRing::NUM_DIRECTIONS] += p.second;
+      result.vals()[ ((slice + 1) / 2) % InfluenceRing::NUM_DIRECTIONS ] += 
+        reward_pair.second.get_influence();
     }
   }
 

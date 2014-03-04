@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @file scan.cpp
+/// @brief Implementation of the Scan class.
+/// @author Zenon Parker
+/// @author Matthew Avery
+/// @date 2014
+///
+////////////////////////////////////////////////////////////////////////////////
+
+#include <scan.hpp>
+
+namespace cell {
+
+CONSTVAL_PF int Scan::RING_RANGES[Scan::NUM_RINGS*2];
+
+} // end namespace cell
+

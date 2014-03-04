@@ -12,6 +12,7 @@
 #define CELL_SCAN_HPP
 
 #include <influence_ring.hpp>
+#include <iostream>
 
 namespace cell {
 

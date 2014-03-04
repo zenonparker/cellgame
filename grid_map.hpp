@@ -32,7 +32,7 @@ public:
     * @param l2   TOP RIGHT location of the rectangle of points to search.
     * @return Vector of all objects found in the range.
     */
-  std::vector<std::pair<Location, T> > find(const Location &l1, const Location &l2);
+  std::vector<std::pair<Location, T> > find(const Location &l1, const Location &l2) const;
 
 private:
 
@@ -55,7 +55,7 @@ void GridMap<T>::erase(const Location &l) {
 }
 
 template<class T>
-std::vector<std::pair<Location,T> > GridMap<T>::find(const Location &bottom_left, const Location &top_right) {
+std::vector<std::pair<Location,T> > GridMap<T>::find(const Location &bottom_left, const Location &top_right) const {
   if (top_right.x < bottom_left.x || bottom_left.y > top_right.y) {
     return{};
   }

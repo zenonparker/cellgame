@@ -37,30 +37,25 @@ public:
     */
   Scan scan_player(const Player& player) const;
 
-  const GridMultiMap<Player*>& player_grid() const;
-  GridMultiMap<Player*>& player_grid();
+  /** @brief Obtains influence values for a given range around a player.
+    *        This function will typically be used by scan_player to obtain
+    *        a full scan.
+    */
+  InfluenceRing scan_single_ring(const Player& player, int minDist, int maxDist) const;
+
+  const GridMultiMap<Player*>& player_grid() const { return player_grid_; }
+  GridMultiMap<Player*>& player_grid() { return player_grid_; }
 
 private:
 
   GridMap<Reward> rewards_;
   GridMultiMap<Player*> player_grid_;
 
-  // Helpers
-  InfluenceRing scan_ring(const Player& player, int min, int max) const;
-
   // No copy construction/assignment.
   Grid(const Grid&) = delete;
   Grid& operator=(const Grid&) = delete;
 
 };
-
-const GridMultiMap<Player*>& Grid::player_grid() const {
-  return player_grid_;
-}
-
-GridMultiMap<Player*>& Grid::player_grid() {
-  return player_grid_;
-}
 
 } // end namespace cell
 

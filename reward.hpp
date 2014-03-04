@@ -22,7 +22,7 @@ public:
   // Accessors
 
   /// Very basic calculation of influence for now...
-  int get_influence() { return quantity_; }
+  int get_influence() const { return quantity_; }
 
 private:
 

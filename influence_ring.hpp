@@ -16,6 +16,8 @@
 #include <limits>
 #include <cpp11_polyfill.hpp>
 #include <climits>
+#include <vector>
+#include <iostream>
 
 namespace cell {
 
