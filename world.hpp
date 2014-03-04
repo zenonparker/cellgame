@@ -37,7 +37,8 @@ private:
 };
 
 inline void World::player_join(PlayerId id) {
-  const auto &player = players_.emplace(id,Player()).first;
+  auto &player = players_.emplace(id,Player()).first->second;
+  grid_.player_grid().insert(player.location(), &player);
 }
 
 inline void World::player_leave(PlayerId id) {
