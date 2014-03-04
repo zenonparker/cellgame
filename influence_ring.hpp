@@ -37,11 +37,11 @@ namespace cell {
 class InfluenceRing {
 public:
   /// Number of directions in this influence ring: North, North East, East, etc...
-  static CONSTVAL_PF int NUM_DIRECTIONS = 8;
+  static constexpr int NUM_DIRECTIONS = 8;
 
   /// The max value for influence in any given direction.
   /// Influence will be in the range [0, MAX_INFLUENCE]
-  static CONSTVAL_PF int MAX_INFLUENCE = INT_MAX; 
+  static constexpr int MAX_INFLUENCE = INT_MAX;
   // TODO: WHEN VisualStudio doesn't suck ass: std::numeric_limits<int>::max();
 
   // Constructors

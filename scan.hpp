@@ -19,10 +19,10 @@ namespace cell {
 class Scan {
 public:
   /// Number of rings of influence in a given Scan.
-  CONSTVAL_PF static int NUM_RINGS = 2;
+  constexpr static int NUM_RINGS = 2;
   /// Array of range values for distances that the rings encompass. Should always
   /// be equal to 2*NUM_RINGS in size. { ring1_min, ring1_max, ring2_min, etc. }
-  CONSTVAL_PF static int RING_RANGES[NUM_RINGS*2] = { 1, 100, 100, 1000 };
+  const static int RING_RANGES[NUM_RINGS * 2]; /*= { { 1, 100, 100, 1000 } };*/
 
   // Constructors
   Scan() { }
