@@ -37,10 +37,15 @@ public:
     */
   Scan scan_player(const Player& player) const;
 
+  const GridMultiMap<Player*>& player_grid() const;
+  GridMultiMap<Player*>& player_grid();
+
 private:
 
   GridMap<Reward> rewards_;
+  GridMultiMap<Player*> player_grid_;
 
+  // Helpers
   InfluenceRing scan_ring(const Player& player, int min, int max) const;
 
   // No copy construction/assignment.
@@ -48,6 +53,14 @@ private:
   Grid& operator=(const Grid&) = delete;
 
 };
+
+const GridMultiMap<Player*>& Grid::player_grid() const {
+  return player_grid_;
+}
+
+GridMultiMap<Player*>& Grid::player_grid() {
+  return player_grid_;
+}
 
 } // end namespace cell
 
