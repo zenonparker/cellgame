@@ -20,12 +20,29 @@ namespace cell {
 template<class T>
 class GridMap {
 public:
+  
   void insert(const Location &l, const T &t);
+
   void erase(const Location &l);
+
+  /** @brief Obtains a vector of all objects in this grid between two locations.
+    *        It is important that the locations are provided in the correct order.
+    *        Range is INCLUSIVE.
+    * @param l1   BOTTOM LEFT location of the rectangle of points to search.
+    * @param l2   TOP RIGHT location of the rectangle of points to search.
+    * @return Vector of all objects found in the range.
+    */
   std::vector<T> find(const Location &l1, const Location &l2);
+
 private:
+
   std::map<Location,T> grid_map_;
+
 };
+
+////////////////////////////////////////////////////////////////////////////////
+///                             IMPLEMENTATION                               ///
+////////////////////////////////////////////////////////////////////////////////
 
 template<class T>
 void GridMap<T>::insert(const Location &l, const T &t) {

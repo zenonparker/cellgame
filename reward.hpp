@@ -16,7 +16,17 @@ namespace cell {
 class Reward {
 public:
 
+  // Constructors
+  Reward(int quantity) : quantity_(quantity) { }
+
+  // Accessors
+
+  /// Very basic calculation of influence for now...
+  int get_influence() { return quantity_; }
+
 private:
+
+  int quantity_;
 
 };
 

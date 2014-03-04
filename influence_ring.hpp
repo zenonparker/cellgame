@@ -60,14 +60,14 @@ private:
 
 };
 
-bool operator==(const InfluenceRing& ir1, const InfluenceRing& ir2) {
+inline bool operator==(const InfluenceRing& ir1, const InfluenceRing& ir2) {
   for (int i = 0; i < ir1.vals_.size(); ++i) {
     if (ir1.vals_[i] != ir2.vals_[i]) return false;
   }
   return true;
 }
 
-std::ostream& operator<<(std::ostream& out, const InfluenceRing& ir) {
+inline std::ostream& operator<<(std::ostream& out, const InfluenceRing& ir) {
   out << "(";
   auto it = ir.vals_.begin();
   while (it != ir.vals_.end()) {
