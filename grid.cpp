@@ -63,15 +63,15 @@ InfluenceRing Grid::scan_single_ring(const Player& player, int minDist, int maxD
     const Location& loc = reward_pair.first;
 
     // Distance check first.
-    double xd = double(ploc.x - loc.x);
-    double yd = double(ploc.y - loc.y);
+    double xd = double(loc.x - ploc.x);
+    double yd = double(loc.y - ploc.y);
     double dist = sqrt(xd*xd + yd*yd);
 
     if (dist >= double(minDist) && dist <= double(maxDist)) {
 
       // Satisfied distance contraint, determine which slice of 
       // the scan pie this rewards falls into.
-      double rads = atan2(double(loc.y), double(loc.x));
+      double rads = atan2(double(loc.y - ploc.y), double(loc.x - ploc.x));
       int slice = (int(rads / PI2_BY_DIRS) + 
                    (InfluenceRing::NUM_DIRECTIONS * 2)) % 
                     (InfluenceRing::NUM_DIRECTIONS * 2);
