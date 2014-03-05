@@ -12,7 +12,7 @@
 
 namespace cell {
 
-CONSTVAL_PF int Scan::RING_RANGES[Scan::NUM_RINGS*2];
+  const int Scan::RING_RANGES[Scan::NUM_RINGS * 2] = { 1, 100, 100, 1000 };
 
 } // end namespace cell
 
