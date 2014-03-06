@@ -11,21 +11,35 @@
 #ifndef CELL_REWARD_HPP
 #define CELL_REWARD_HPP
 
+#include <player.hpp>
+
 namespace cell {
 
 class Reward {
 public:
 
+  enum class RewardType {
+    TRIVIAL,     // Should probably only be used for testing purposes, simply
+                 // returns the quantity with no modifiers whatsoever.
+    DISTANCE,    // Reduction in influence based on the distance from the player.
+    DIST_TIME    // DISTANCE + Reduced influence based on how recently it has
+                 // been scanned.
+  };
+
   // Constructors
-  Reward(int quantity) : quantity_(quantity) { }
+  explicit Reward(int quantity) : quantity_(quantity), type_(RewardType::TRIVIAL) { }
+  Reward(int quantity, RewardType type) : quantity_(quantity), type_(type) { }
 
-  // Accessors
-
-  /// Very basic calculation of influence for now...
-  int get_influence() const { return quantity_; }
+  /** @brief Obtain the influence that this reward is exerting on the given player.
+    * @param player   Player whom is performing the scan.
+    * @param loc      Location of this reward.
+    * @return Influence value.
+    */
+  int get_influence(const Player& player, const Location& loc);
 
 private:
 
+  RewardType type_;
   int quantity_;
 
 };

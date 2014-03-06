@@ -57,9 +57,11 @@ InfluenceRing Grid::scan_single_ring(const Player& player, int minDist, int maxD
   // location that encompasses the largest scan ring.
   Location bottom_left{ploc.x - maxDist, ploc.y - maxDist};
   Location top_right{ploc.x + maxDist, ploc.y + maxDist};
+  // TODO: Update this to use find_ptr or something. We need modifiable objects
+  //       from the grid in case we need to update reward values after a scan.
   auto potential_rewards = rewards_.find(bottom_left, top_right);
 
-  for (const auto& reward_pair : potential_rewards) {
+  for (auto& reward_pair : potential_rewards) {
     const Location& loc = reward_pair.first;
 
     // Distance check first.
@@ -82,7 +84,7 @@ InfluenceRing Grid::scan_single_ring(const Player& player, int minDist, int maxD
       //              slice index 0 = (0 + 1)/2 = 0.5 % 8 = zeroth slice. (east)
       //              slice index 1 = (1 + 1)/2 = 1 % 8 = index 1 slice (north-east)
       result.vals()[ ((slice + 1) / 2) % InfluenceRing::NUM_DIRECTIONS ] += 
-        reward_pair.second.get_influence();
+        reward_pair.second.get_influence(player, loc);
     }
   }
 
