@@ -23,7 +23,8 @@ namespace cell {
     void insert(const Location &l, const T &t);
     void erase_one(const Location &l, const T &t);
     void erase_all(const Location &l, const T &t);
-    std::vector<std::pair<Location, T> >  find(const Location &l1, const Location &l2);
+    std::vector<std::pair<Location, T> >  find(const Location &l1, const Location &l2) const;
+    std::vector<std::pair<Location, T*> >  find_ptr(const Location &l1, const Location &l2);
   private:
     std::multimap<Location, T> grid_map_;
   };
@@ -63,7 +64,7 @@ namespace cell {
   }
 
   template<class T>
-  std::vector<std::pair<Location, T> >  GridMultiMap<T>::find(const Location &bottom_left, const Location &top_right) {
+  std::vector<std::pair<Location, T> >  GridMultiMap<T>::find(const Location &bottom_left, const Location &top_right) const {
     if (top_right.x < bottom_left.x || bottom_left.y > top_right.y) {
       return{};
     }
@@ -76,6 +77,26 @@ namespace cell {
     for (auto it = begin; it != end; ++it) {
       if (it->first.y >= bottom_left.y && it->first.y <= top_right.y) {
         ret.emplace_back(*it);
+      }
+    }
+    return ret;
+  }
+
+  template<class T>
+  std::vector<std::pair<Location, T*> >  GridMultiMap<T>::find_ptr(const Location &bottom_left, const Location &top_right) {
+    if (top_right.x < bottom_left.x || bottom_left.y > top_right.y) {
+      return{};
+    }
+    const auto begin = grid_map_.lower_bound(bottom_left);
+    auto end = grid_map_.upper_bound(top_right);
+    if (begin == end && begin == grid_map_.end()) {
+      return{};
+    }
+    typedef std::vector<std::pair<Location, T*> > RetType;
+    RetType ret;
+    for (auto it = begin; it != end; ++it) {
+      if (it->first.y >= bottom_left.y && it->first.y <= top_right.y) {
+        ret.emplace_back(RetType::value_type{ it->first, &(it->second) });
       }
     }
     return ret;
