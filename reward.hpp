@@ -18,6 +18,14 @@ namespace cell {
 class Reward {
 public:
 
+  /// Time after a reset of last scanned that this reward will exert full
+  /// influence again. (in milliseconds)
+  constexpr static uint64_t RECOVERY_TIME = 60000;
+
+  /// After this many scans the reward will reset influence and gradually
+  /// regain it over RECOVERY_TIME milliseconds.
+  constexpr static int NUM_SCANS_BEFORE_RESET = 3;
+
   enum class RewardType {
     TRIVIAL,     // Should probably only be used for testing purposes, simply
                  // returns the quantity with no modifiers whatsoever.
@@ -41,7 +49,8 @@ private:
 
   RewardType type_;
   int quantity_;
-  uint64_t last_scanned_;
+  int scans_ = 0;
+  uint64_t last_scanned_ = 0;
 
 };
 
