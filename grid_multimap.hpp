@@ -96,7 +96,7 @@ namespace cell {
     RetType ret;
     for (auto it = begin; it != end; ++it) {
       if (it->first.y >= bottom_left.y && it->first.y <= top_right.y) {
-        ret.emplace_back(RetType::value_type{ it->first, &(it->second) });
+        ret.emplace_back(it->first, &(it->second));
       }
     }
     return ret;

@@ -41,6 +41,7 @@ private:
 
   RewardType type_;
   int quantity_;
+  uint64_t last_scanned_;
 
 };
 
