@@ -12,6 +12,7 @@
 #define CELL_LOCATION_HPP
 
 #include <iostream>
+#include <math.h>
 
 namespace cell {
 
@@ -20,10 +21,17 @@ struct Location {
   int x;
   int y;
   bool between(const Location& top_left, const Location& bottom_right);
+  double distanceTo(const Location& loc) const;
 };
 
 inline bool Location::between(const Location& bottom_left, const Location& top_right) {
   return x >= bottom_left.x && x <= top_right.x && y >= bottom_left.y && y <= top_right.y;
+}
+
+inline double Location::distanceTo(const Location& loc) const {
+  double xd = double(x - loc.x);
+  double yd = double(y - loc.y);
+  return sqrt(xd*xd + yd*yd);
 }
 
 inline bool operator==(const Location& l1, const Location& l2) {
@@ -38,7 +46,6 @@ inline bool operator<(const Location& l1, const Location& l2) {
 
 inline std::ostream& operator<<(std::ostream& out, const Location& l) {
   return out << "(" << l.x << ", " << l.y << ")";
-
 }
 
 } // end namespace cell

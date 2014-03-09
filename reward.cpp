@@ -13,6 +13,13 @@
 
 // cell
 #include <reward.hpp>
+#include <scan.hpp>
+
+namespace {
+  const static double MIN_DIST = double(cell::Scan::RING_RANGES[0]);
+  const static double MAX_DIST = double(cell::Scan::RING_RANGES[cell::Scan::NUM_RINGS * 2 - 1]);
+  const static double DIST_RANGE = MAX_DIST - MIN_DIST;
+}
 
 namespace cell {
 
@@ -29,14 +36,16 @@ int Reward::get_influence(const Player& player, const Location& loc)
       break;
     case RewardType::DISTANCE:
       {
-        double dist_mod = 1.0;
+        double dist = player.location().distanceTo(loc);
+        double dist_mod = 1.0 - std::max(0.0, std::min(1.0, dist / DIST_RANGE));
         influence = int(double(quantity_) * dist_mod);
       }
       break;
     case RewardType::DIST_TIME:
       {
+        double dist = player.location().distanceTo(loc);
+        double dist_mod = 1.0 - std::max(0.0, std::min(1.0, dist / DIST_RANGE));
         double time_mod = std::min(double(cur_time - last_scanned_) / double(RECOVERY_TIME), 1.0);
-        double dist_mod = 1.0;
         influence = int(double(quantity_) * time_mod * dist_mod);
       }
       break;
