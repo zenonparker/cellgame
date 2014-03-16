@@ -41,9 +41,11 @@ public:
   /** @brief Obtain the influence that this reward is exerting on the given player.
     * @param player   Player whom is performing the scan.
     * @param loc      Location of this reward.
+    * @param minDist  Minimum distance for this scan.
+    * @param maxDist  Maximum distance for this scan.
     * @return Influence value.
     */
-  int get_influence(const Player& player, const Location& loc);
+  int get_influence(const Player& player, const Location& loc, int minDist, int maxDist);
 
 private:
 

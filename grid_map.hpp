@@ -28,11 +28,11 @@ public:
   /** @brief Obtains a vector of all objects in this grid between two locations.
     *        It is important that the locations are provided in the correct order.
     *        Range is INCLUSIVE.
-    * @param l1   BOTTOM LEFT location of the rectangle of points to search.
-    * @param l2   TOP RIGHT location of the rectangle of points to search.
+    * @param bottom_left   BOTTOM LEFT location of the rectangle of points to search.
+    * @param top_right     TOP RIGHT location of the rectangle of points to search.
     * @return Vector of all objects found in the range.
     */
-  std::vector<std::pair<Location, T> > find(const Location &l1, const Location &l2) const;
+  std::vector<std::pair<Location, T> > find(const Location &bottom_left, const Location &top_right) const;
   std::vector<std::pair<Location, T*> > find_ptr(const Location &bottom_left, const Location &top_right);
 
 private:

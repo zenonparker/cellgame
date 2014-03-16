@@ -35,13 +35,13 @@ public:
     *        The location of the player is not verified in the grid, it
     *        is simply taken from the provided player object.
     */
-  Scan scan_player(const Player& player) const;
+  Scan scan_player(const Player& player);
 
   /** @brief Obtains influence values for a given range around a player.
     *        This function will typically be used by scan_player to obtain
     *        a full scan.
     */
-  InfluenceRing scan_single_ring(const Player& player, int minDist, int maxDist) const;
+  InfluenceRing scan_single_ring(const Player& player, int minDist, int maxDist);
 
   const GridMultiMap<Player*>& player_grid() const { return player_grid_; }
   GridMultiMap<Player*>& player_grid() { return player_grid_; }
