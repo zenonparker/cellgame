@@ -11,6 +11,10 @@
 #ifndef CELL_GRID_HPP
 #define CELL_GRID_HPP
 
+// std
+#include <random>
+
+// cell
 #include <grid_map.hpp>
 #include <grid_multimap.hpp>
 #include <player.hpp>
@@ -23,7 +27,7 @@ class Grid {
 public:
 
   // Constructors
-  Grid() { }
+  Grid() { rand_gen_.seed(rand_device_()); }
 
   /// Adds a reward to the grid at the given location.
   void add_reward(const Location& location, const Reward& reward);
@@ -48,10 +52,20 @@ public:
     */
   InfluenceRing scan_single_ring(const Player& player, int minDist, int maxDist);
 
+  /** @brief Used for testing purposes, reset the random number generator with
+    *        a given seed.
+    */
+  void reset_seed(std::mt19937::result_type seed);
+
+  // Basic Accessors
   const GridMultiMap<Player*>& player_grid() const { return player_grid_; }
   GridMultiMap<Player*>& player_grid() { return player_grid_; }
 
 private:
+
+  // Utilities for random initialization
+  std::random_device rand_device_;
+  std::mt19937 rand_gen_;
 
   GridMap<Reward> rewards_;
   GridMultiMap<Player*> player_grid_;

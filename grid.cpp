@@ -31,12 +31,19 @@ void Grid::remove_reward(const Location& location)
 
 Scan Grid::scan_player(const Player& player)
 {
-  // TODO: Randomize radii of the scans.
   Scan result;
   for (int i = 0; i < Scan::NUM_RINGS; ++i) {
+    // A scan with range [min, max] will be [min +- var, max +- var].
+    std::uniform_int_distribution<int> dist(-Scan::RING_RANGE_VARIANCE[i],
+                                             Scan::RING_RANGE_VARIANCE[i]);
+    // Declaring these beforehand rather than inline so that we are guaranteed
+    // the order of the random number generations (this makes unit testing with
+    // a given seed possible).
+    int var1 = dist(rand_gen_);
+    int var2 = dist(rand_gen_);
     result.rings()[i] = scan_single_ring(player, 
-                                         Scan::RING_RANGES[i*2],
-                                         Scan::RING_RANGES[(i*2)+1]);
+                                         Scan::RING_RANGES[i*2] + var1,
+                                         Scan::RING_RANGES[(i*2)+1] + var2);
   }
   return result;
 }
@@ -90,6 +97,11 @@ InfluenceRing Grid::scan_single_ring(const Player& player, int minDist, int maxD
   }
 
   return result;
+}
+
+void Grid::reset_seed(std::mt19937::result_type seed)
+{
+  rand_gen_.seed(seed);
 }
 
 } // end namespace cell

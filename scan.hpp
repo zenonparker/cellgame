@@ -22,7 +22,8 @@ public:
   constexpr static int NUM_RINGS = 2;
   /// Array of range values for distances that the rings encompass. Should always
   /// be equal to 2*NUM_RINGS in size. { ring1_min, ring1_max, ring2_min, etc. }
-  const static int RING_RANGES[NUM_RINGS * 2]; /*= { { 1, 100, 100, 1000 } };*/
+  const static int RING_RANGES[NUM_RINGS * 2]; /*= { { 20, 100, 100, 1000 } };*/
+  const static int RING_RANGE_VARIANCE[NUM_RINGS]; /*= { { 10, 25 } };*/
 
   // Constructors
   Scan() { }
