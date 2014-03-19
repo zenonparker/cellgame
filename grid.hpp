@@ -37,6 +37,11 @@ public:
     */
   Scan scan_player(const Player& player);
 
+  /** @brief Same functionality as scan_player EXCEPT does not randomize
+    *        the radii of the scan rings.
+    */
+  Scan scan_player_fixed(const Player& player);
+
   /** @brief Obtains influence values for a given range around a player.
     *        This function will typically be used by scan_player to obtain
     *        a full scan.

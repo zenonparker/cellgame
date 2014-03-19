@@ -12,14 +12,9 @@
 
 namespace {
 
-CONSTVAL_PF static double PI = 3.141592653589793238462;
-CONSTVAL_PF static double PI2_BY_DIRS = (PI * 2.0) / double(cell::InfluenceRing::NUM_DIRECTIONS * 2);
+constexpr static double PI = 3.141592653589793238462;
+constexpr static double PI2_BY_DIRS = (PI * 2.0) / double(cell::InfluenceRing::NUM_DIRECTIONS * 2);
 
-/*
-InfluenceRing doRing(const vector<pair<Location, int>>& locs, const Location& ploc,
-                     int minDist, int maxDist)
-{
-*/
 }
 
 namespace cell {
@@ -36,6 +31,7 @@ void Grid::remove_reward(const Location& location)
 
 Scan Grid::scan_player(const Player& player)
 {
+  // TODO: Randomize radii of the scans.
   Scan result;
   for (int i = 0; i < Scan::NUM_RINGS; ++i) {
     result.rings()[i] = scan_single_ring(player, 
@@ -45,6 +41,16 @@ Scan Grid::scan_player(const Player& player)
   return result;
 }
 
+Scan Grid::scan_player_fixed(const Player& player)
+{
+  Scan result;
+  for (int i = 0; i < Scan::NUM_RINGS; ++i) {
+    result.rings()[i] = scan_single_ring(player, 
+                                         Scan::RING_RANGES[i*2],
+                                         Scan::RING_RANGES[(i*2)+1]);
+  }
+  return result;
+}
 
 InfluenceRing Grid::scan_single_ring(const Player& player, int minDist, int maxDist)
 {
