@@ -22,8 +22,15 @@ public:
   
   World() { }
 
-  void player_join(PlayerId id);
-  void player_leave(PlayerId id);
+  /** @brief Add a player to the world.
+    * @return True if the player was added, false if they already existed.
+    */
+  bool player_join(PlayerId id);
+
+  /** @brief Remove a player from the world.
+    * @return True if the player was removed, false otherwise.
+    */
+  bool player_leave(PlayerId id);
   
   Grid& grid();
   const Grid& grid() const;
@@ -36,17 +43,23 @@ private:
   Grid grid_;
 };
 
-inline void World::player_join(PlayerId id) {
-  auto &player = players_.emplace(id,Player()).first->second;
-  grid_.player_grid().insert(player.location(), &player);
+inline bool World::player_join(PlayerId id) {
+  auto ret = players_.emplace(id,Player(id));
+  if (ret.second) {
+    auto &player = ret.first->second;
+    grid_.player_grid().insert(player.location(), &player);
+  }
+  return ret.second;
 }
 
-inline void World::player_leave(PlayerId id) {
+inline bool World::player_leave(PlayerId id) {
   const auto cit = players_.find(id);
   if (cit != players_.end()) {
     grid_.player_grid().erase_one(cit->second.location(), &cit->second);
     players_.erase(cit);
+    return true;
   }
+  return false;
 }
 
 inline Grid& World::grid() { return grid_; }

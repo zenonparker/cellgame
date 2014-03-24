@@ -20,7 +20,11 @@ typedef int PlayerId;
 
 class Player {
 public:
-  Player();
+
+  Player(PlayerId pid);
+  Player() : Player(-1) {}
+
+  // Accessors
   PlayerId& player_id();
   const PlayerId& player_id() const;
   const Location& location() const;
@@ -32,7 +36,9 @@ private:
 
 };
 
-inline Player::Player() :location_(0, 0){ /*TODO STUB*/ }
+inline Player::Player(PlayerId pid) : location_(0, 0), player_id_(pid) {
+  // TODO: Location?
+}
 
 inline PlayerId& Player::player_id() { return player_id_;  }
 inline const PlayerId& Player::player_id() const { return player_id_; }
