@@ -18,6 +18,13 @@ namespace cell {
 class Reward {
 public:
 
+  /// Hit radius should be equivalent to the scan deadzone's radius.
+  constexpr static double HIT_RADIUS = 10.0;
+
+  /// The exponent in the equation for reward value based on distance.
+  /// value = (((radius - distance) / radius) ^ falloff) * quantity
+  constexpr static double HIT_VALUE_FALLOFF = 3.0;
+
   /// Time after a reset of last scanned that this reward will exert full
   /// influence again. (in milliseconds)
   constexpr static uint64_t RECOVERY_TIME = 60000;
@@ -46,6 +53,17 @@ public:
     * @return Influence value.
     */
   int get_influence(const Player& player, const Location& loc, int minDist, int maxDist);
+
+  /** @brief Obtains the value of this reward given that it was "hit" by a player
+    *        at the provided location. The goal of this mechanic is to allow a player
+    *        to obtain a portion of a reward based on how accurately they guessed the
+    *        location.
+    * @param qloc Location from which the value of this reward is being queried.
+    * @param rloc Location of this reward.
+    * @return Value of the reward as seen from the provided location. 
+    *         Always in the range [0, quantity_].
+    */
+  int value_from_location(const Location& qloc, const Location& rloc) const;
 
 private:
 

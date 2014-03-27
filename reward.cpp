@@ -58,5 +58,14 @@ int Reward::get_influence(const Player& player, const Location& loc, int minDist
   return influence;
 }
 
+int Reward::value_from_location(const Location& qloc, const Location& rloc) const
+{
+  double dist = qloc.distanceTo(rloc);
+  double reward_percent = pow(((HIT_RADIUS - dist) / HIT_RADIUS), HIT_VALUE_FALLOFF);
+
+  // Minimum reward from any hit is always one!
+  return std::max(dist <= HIT_RADIUS ? 1 : 0, int(reward_percent * double(quantity_)));
+}
+
 } // end namespace cell
 
