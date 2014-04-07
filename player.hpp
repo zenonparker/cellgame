@@ -21,27 +21,27 @@ typedef int PlayerId;
 class Player {
 public:
 
-  Player(PlayerId pid);
+  explicit Player(PlayerId pid);
   Player() : Player(-1) {}
 
   // Accessors
-  PlayerId& player_id();
-  const PlayerId& player_id() const;
+  PlayerId& id();
+  const PlayerId& id() const;
   const Location& location() const;
   Location& location();
 
 private:
-  PlayerId player_id_;
+  PlayerId id_;
   Location location_;
 
 };
 
-inline Player::Player(PlayerId pid) : location_(0, 0), player_id_(pid) {
+inline Player::Player(PlayerId pid) : location_(0, 0), id_(pid) {
   // TODO: Location?
 }
 
-inline PlayerId& Player::player_id() { return player_id_;  }
-inline const PlayerId& Player::player_id() const { return player_id_; }
+inline PlayerId& Player::id() { return id_;  }
+inline const PlayerId& Player::id() const { return id_; }
 
 inline const Location& Player::location() const { return location_; }
 inline Location& Player::location() { return location_; }

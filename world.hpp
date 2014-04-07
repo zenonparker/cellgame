@@ -25,7 +25,7 @@ public:
   /** @brief Add a player to the world.
     * @return True if the player was added, false if they already existed.
     */
-  bool player_join(PlayerId id);
+  bool player_join(const Player& p);
 
   /** @brief Remove a player from the world.
     * @return True if the player was removed, false otherwise.
@@ -43,8 +43,8 @@ private:
   Grid grid_;
 };
 
-inline bool World::player_join(PlayerId id) {
-  auto ret = players_.emplace(id,Player(id));
+inline bool World::player_join(const Player& p) {
+  auto ret = players_.emplace(p.id(),p);
   if (ret.second) {
     auto &player = ret.first->second;
     grid_.player_grid().insert(player.location(), &player);

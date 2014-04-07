@@ -46,14 +46,14 @@ TEST(CellTests, scanRingTest) {
 TEST(CellTests, joinLeaveTest) {
   World w;
 
-  EXPECT_TRUE(w.player_join(1));
-  EXPECT_TRUE(w.player_join(2));
-  EXPECT_TRUE(w.player_join(3));
-  EXPECT_TRUE(w.player_join(4));
+  EXPECT_TRUE(w.player_join(Player(1)));
+  EXPECT_TRUE(w.player_join(Player(2)));
+  EXPECT_TRUE(w.player_join(Player(3)));
+  EXPECT_TRUE(w.player_join(Player(4)));
 
   // Already added.
-  EXPECT_FALSE(w.player_join(1));
-  EXPECT_FALSE(w.player_join(2));
+  EXPECT_FALSE(w.player_join(Player(1)));
+  EXPECT_FALSE(w.player_join(Player(2)));
 
   EXPECT_TRUE(w.player_leave(1));
 
@@ -68,9 +68,9 @@ TEST(CellTests, joinLeaveTest) {
   EXPECT_FALSE(w.player_leave(4));
 
   // Everyone should be able to join again.
-  EXPECT_TRUE(w.player_join(1));
-  EXPECT_TRUE(w.player_join(2));
-  EXPECT_TRUE(w.player_join(3));
-  EXPECT_TRUE(w.player_join(4));
+  EXPECT_TRUE(w.player_join(Player(1)));
+  EXPECT_TRUE(w.player_join(Player(2)));
+  EXPECT_TRUE(w.player_join(Player(3)));
+  EXPECT_TRUE(w.player_join(Player(4)));
 }
 
