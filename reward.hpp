@@ -65,6 +65,9 @@ public:
     */
   int value_from_location(const Location& qloc, const Location& rloc) const;
 
+  const int& quantity() const { return quantity_; }
+  int& quantity() { return quantity_; }
+
 private:
 
   RewardType type_;
