@@ -32,11 +32,11 @@ public:
 
 private:
   PlayerId id_;
-  Location location_;
+  Location location_ = Location{0, 0};
 
 };
 
-inline Player::Player(PlayerId pid) : location_(0, 0), id_(pid) {
+inline Player::Player(PlayerId pid) : id_(pid) {
   // TODO: Location?
 }
 

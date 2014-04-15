@@ -20,6 +20,7 @@
 #include <player.hpp>
 #include <reward.hpp>
 #include <scan.hpp>
+#include <rewardmanager.hpp>
 
 namespace cell {
 
@@ -29,8 +30,12 @@ public:
   // Constructors
   Grid() { rand_gen_.seed(rand_device_()); }
 
-  /// Adds a reward to the grid at the given location.
-  void add_reward(const Location& location, const Reward& reward);
+  /** @brief Adds a reward to the grid. The location at which this reward will be
+    *        added is stored inside the Reward itself.
+    * @param reward   Reward to add.
+    * @param level    Level of this reward in distribution hierarchy.
+    */
+  void add_reward(const Reward& reward, unsigned int level = RewardManager::DEFAULT_LEVEL);
 
   /// Removes a reward from the grid at a given location.
   void remove_reward(const Location& location);
@@ -67,7 +72,8 @@ private:
   std::random_device rand_device_;
   std::mt19937 rand_gen_;
 
-  GridMap<Reward> rewards_;
+  RewardManager reward_man_;
+  GridMap<Reward*> reward_grid_;
   GridMultiMap<Player*> player_grid_;
 
   // No copy construction/assignment.

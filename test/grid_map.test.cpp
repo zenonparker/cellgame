@@ -78,3 +78,58 @@ TEST(GridMap, findLocations) {
   
 }
 
+TEST(GridMap, removeReward) {
+  // Valid locations
+  Location s1(0, 0), s2(1, 0), s3(1, 1), s4(0, 1);
+  // Invalid locations
+  Location i1(10,10), i2(11,11);
+
+  GridMap<int> gridmap;
+  gridmap.insert(s1, 900);
+  gridmap.insert(s2, 910);
+  gridmap.insert(s3, 911);
+  gridmap.insert(s4, 901);
+
+  typedef std::vector<std::pair<Location,int>> RetType;
+  {
+    RetType ret = gridmap.find(s1, s1);
+    RetType expected_result = { { s1, 900 } };
+    EXPECT_TRUE(areEqual(expected_result, ret));
+  }
+
+  // Remove nothing.
+  int i = -1;
+  EXPECT_FALSE(gridmap.remove(i1, i));
+  EXPECT_EQ(i, -1);
+
+  // Make sure everything is still there.
+  {
+    RetType ret = gridmap.find(s1, s1);
+    RetType expected_result = { { s1, 900 } };
+    EXPECT_TRUE(areEqual(expected_result, ret));
+
+    ret = gridmap.find(s1, s2);
+    expected_result = { { s1, 900 }, { s2, 910 } };
+    EXPECT_TRUE(areEqual(expected_result, ret));
+
+    ret = gridmap.find(s1, s4);
+    expected_result = { { s1, 900 }, { s4, 901 } };
+    EXPECT_TRUE(areEqual(expected_result, ret));
+
+    ret = gridmap.find(s1, s3);
+    expected_result = { { s1, 900 }, { s4, 901 }, { s2, 910 }, { s3, 911 } };
+    EXPECT_TRUE(areEqual(expected_result, ret));
+
+    ret = gridmap.find(s3, s1);
+    expected_result = { };
+    EXPECT_TRUE(areEqual(expected_result, ret));
+  }
+
+  EXPECT_TRUE(gridmap.remove(s1, i));
+  EXPECT_EQ(i, 900);
+
+  i = -1;
+  EXPECT_TRUE(gridmap.remove(s2, i));
+  EXPECT_EQ(i, 910);
+}
+

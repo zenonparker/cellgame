@@ -25,6 +25,12 @@ public:
 
   void erase(const Location &l);
 
+  /** @brief Removes and returns a copy of the removed object in the 
+    *        reference provided.
+    * @return True if an item was found and removed, false otherwise.
+    */
+  bool remove(const Location &l, T& t);
+
   /** @brief Obtains a vector of all objects in this grid between two locations.
     *        It is important that the locations are provided in the correct order.
     *        Range is INCLUSIVE.
@@ -53,6 +59,17 @@ void GridMap<T>::insert(const Location &l, const T &t) {
 template<class T>
 void GridMap<T>::erase(const Location &l) {
   grid_map_.erase(l);
+}
+
+template<class T>
+bool GridMap<T>::remove(const Location &l, T& t) {
+  const auto it = grid_map_.find(l);
+  if (it != grid_map_.end()) {
+    t = it->second;
+    grid_map_.erase(it);
+    return true;
+  }
+  return false;
 }
 
 template<class T>

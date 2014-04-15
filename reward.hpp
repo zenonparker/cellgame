@@ -12,8 +12,11 @@
 #define CELL_REWARD_HPP
 
 #include <player.hpp>
+#include <location.hpp>
 
 namespace cell {
+
+typedef int RewardId;
 
 class Reward {
 public:
@@ -42,8 +45,14 @@ public:
   };
 
   // Constructors
-  explicit Reward(int quantity) : quantity_(quantity), type_(RewardType::TRIVIAL) { }
-  Reward(int quantity, RewardType type) : quantity_(quantity), type_(type) { }
+  Reward(RewardId id, int quantity)
+    : id_(id), quantity_(quantity) { }
+  Reward(RewardId id, int quantity, const Location& loc)
+    : id_(id), quantity_(quantity), location_(loc) { }
+  Reward(RewardId id, int quantity, RewardType type)
+    : id_(id), quantity_(quantity), type_(type) { }
+  Reward(RewardId id, int quantity, RewardType type, const Location& loc)
+    : id_(id), quantity_(quantity), type_(type), location_(loc) { }
 
   /** @brief Obtain the influence that this reward is exerting on the given player.
     * @param player   Player whom is performing the scan.
@@ -65,13 +74,22 @@ public:
     */
   int value_from_location(const Location& qloc, const Location& rloc) const;
 
+  // Accessors
+
   const int& quantity() const { return quantity_; }
   int& quantity() { return quantity_; }
 
+  const Location& location() const { return location_; }
+  Location& location() { return location_; }
+
+  const RewardId& id() const { return id_; }
+
 private:
 
-  RewardType type_;
-  int quantity_;
+  RewardId id_;
+  RewardType type_ = RewardType::TRIVIAL;
+  Location location_ = Location{0, 0};
+  int quantity_ = 0;
   int scans_ = 0;
   uint64_t last_scanned_ = 0;
 

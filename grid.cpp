@@ -19,14 +19,17 @@ constexpr static double PI2_BY_DIRS = (PI * 2.0) / double(cell::InfluenceRing::N
 
 namespace cell {
 
-void Grid::add_reward(const Location& location, const Reward& reward)
+void Grid::add_reward(const Reward& reward, unsigned int level /* = RewardManager::DEFAULT_LEVEL */)
 {
-  rewards_.insert(location, reward);
+  reward_grid_.insert(reward.location(), reward_man_.add_reward(reward, level));
 }
 
 void Grid::remove_reward(const Location& location)
 {
-  rewards_.erase(location);
+  Reward* r;
+  if (reward_grid_.remove(location, r)) {
+    reward_man_.remove_reward(*r);
+  }
 }
 
 Scan Grid::scan_player(const Player& player)
@@ -69,7 +72,7 @@ InfluenceRing Grid::scan_single_ring(const Player& player, int minDist, int maxD
   // location that encompasses the largest scan ring.
   Location bottom_left{ploc.x - maxDist, ploc.y - maxDist};
   Location top_right{ploc.x + maxDist, ploc.y + maxDist};
-  auto potential_rewards = rewards_.find_ptr(bottom_left, top_right);
+  auto potential_rewards = reward_grid_.find(bottom_left, top_right);
 
   for (auto& reward_pair : potential_rewards) {
     const Location& loc = reward_pair.first;
