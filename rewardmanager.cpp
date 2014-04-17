@@ -13,10 +13,9 @@
 
 namespace cell {
 
-Reward* RewardManager::add_reward(const Reward& reward, unsigned int level)
+Reward* RewardManager::add_reward(const Reward& reward)
 {
-  if (level > NUM_LEVELS) return NULL;
-  auto ret = reward_levels_[level].emplace(reward.id(), reward);
+  auto ret = reward_levels_[reward.level()].emplace(reward.id(), reward);
   return &(ret.first->second);
 }
 

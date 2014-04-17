@@ -44,15 +44,16 @@ public:
                  // been scanned.
   };
 
-  // Constructors
-  Reward(RewardId id, int quantity)
-    : id_(id), quantity_(quantity) { }
-  Reward(RewardId id, int quantity, const Location& loc)
-    : id_(id), quantity_(quantity), location_(loc) { }
-  Reward(RewardId id, int quantity, RewardType type)
-    : id_(id), quantity_(quantity), type_(type) { }
-  Reward(RewardId id, int quantity, RewardType type, const Location& loc)
-    : id_(id), quantity_(quantity), type_(type), location_(loc) { }
+  enum RewardLevel {
+    GRAND = 0,   // One of these per game board.
+    LARGE,       // Varying other sizes, allocation strategy configurable.
+    MEDIUM,
+    SMALL,
+    NUM_LEVELS
+  };
+
+  /// Constructor
+  Reward(RewardId id, RewardType type) : id_(id), type_(type) {}
 
   /** @brief Obtain the influence that this reward is exerting on the given player.
     * @param player   Player whom is performing the scan.
@@ -76,24 +77,42 @@ public:
 
   // Accessors
 
-  const int& quantity() const { return quantity_; }
+  const RewardLevel& level() const { return level_; }
+  RewardLevel& level() { return level_; }
+
+  const int quantity() const { return quantity_; }
   int& quantity() { return quantity_; }
 
   const Location& location() const { return location_; }
   Location& location() { return location_; }
 
+  const RewardType& type() const { return type_; }
   const RewardId& id() const { return id_; }
+
+  friend std::ostream& operator<<(std::ostream& out, const Reward& r);
 
 private:
 
   RewardId id_;
-  RewardType type_ = RewardType::TRIVIAL;
+  RewardType type_;
+  RewardLevel level_ = RewardLevel::SMALL;
   Location location_ = Location{0, 0};
   int quantity_ = 0;
   int scans_ = 0;
   uint64_t last_scanned_ = 0;
 
 };
+
+inline std::ostream& operator<<(std::ostream& out, const Reward& r) {
+  return out << "Reward[" << r.id_ << "] {"
+             << " type: " << int(r.type_)
+             << " level: " << r.level_
+             << " location: " << r.location_
+             << " quantity: " << r.quantity_
+             << " scans: " << r.scans_
+             << " last_scanned: " << r.last_scanned_
+             << " }";
+}
 
 } // end namespace cell
 

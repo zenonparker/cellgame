@@ -19,9 +19,9 @@ constexpr static double PI2_BY_DIRS = (PI * 2.0) / double(cell::InfluenceRing::N
 
 namespace cell {
 
-void Grid::add_reward(const Reward& reward, unsigned int level /* = RewardManager::DEFAULT_LEVEL */)
+void Grid::add_reward(const Reward& reward)
 {
-  reward_grid_.insert(reward.location(), reward_man_.add_reward(reward, level));
+  reward_grid_.insert(reward.location(), reward_man_.add_reward(reward));
 }
 
 void Grid::remove_reward(const Location& location)

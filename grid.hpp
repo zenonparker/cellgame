@@ -30,12 +30,9 @@ public:
   // Constructors
   Grid() { rand_gen_.seed(rand_device_()); }
 
-  /** @brief Adds a reward to the grid. The location at which this reward will be
-    *        added is stored inside the Reward itself.
-    * @param reward   Reward to add.
-    * @param level    Level of this reward in distribution hierarchy.
-    */
-  void add_reward(const Reward& reward, unsigned int level = RewardManager::DEFAULT_LEVEL);
+  /// Adds a reward to the grid. The location at which this reward will be
+  /// added is stored inside the Reward itself.
+  void add_reward(const Reward& reward);
 
   /// Removes a reward from the grid at a given location.
   void remove_reward(const Location& location);

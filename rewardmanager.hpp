@@ -21,21 +21,11 @@ namespace cell {
 class RewardManager {
 public:
 
-  /// Default allocation level for rewards.
-  constexpr static unsigned int DEFAULT_LEVEL = 3;
-
-  /// Number of allocation levels for rewards.
-  constexpr static unsigned int NUM_LEVELS = 4;
-  // 0 = Grand prize.
-  // 1 = Large prize.
-  // 2 = Medium prize.
-  // 3 = Small prize.
-
-  RewardManager() : reward_levels_{NUM_LEVELS} { }
+  RewardManager() : reward_levels_(Reward::RewardLevel::NUM_LEVELS) { }
 
   /// Used for testing purposes and perhaps loading from database. New rewards
   /// in the live game should be generated elsewhere by the RewardManager.
-  Reward* add_reward(const Reward& reward, unsigned int level);
+  Reward* add_reward(const Reward& reward);
 
   /** @brief Remove a reward.
     * @return True if a reward was removed, false otherwise.
