@@ -18,6 +18,16 @@
 
 namespace cell {
 
+// TODO: Reward manager should be able to:
+//    - Remove a reward and redistribute the remaining quantity.
+//    - Generate a new reward based on some strategy for reward distribution.
+//    - When removing a reward, first generate at least one replacement
+//      in an appropriate allocation class.
+//    - Distribute some provided quantity over existing rewards and potentially
+//      generate new rewards if applicable.
+//    - Track the total quantity in the world of rewards, and total quantity
+//      in each reward allocation class.
+
 class RewardManager {
 public:
 

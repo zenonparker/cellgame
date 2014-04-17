@@ -46,7 +46,7 @@ public:
 
   enum RewardLevel {
     GRAND = 0,   // One of these per game board.
-    LARGE,       // Varying other sizes, allocation strategy configurable.
+    LARGE,       // Various other sizes, allocation strategy configurable.
     MEDIUM,
     SMALL,
     NUM_LEVELS
