@@ -18,7 +18,7 @@
 
 namespace cell {
 
-int Reward::get_influence(const Player& player, const Location& loc, int minDist, int maxDist)
+int Reward::get_influence(const Player& player, int minDist, int maxDist)
 {
   int influence = 0;
 
@@ -32,14 +32,14 @@ int Reward::get_influence(const Player& player, const Location& loc, int minDist
       break;
     case RewardType::DISTANCE:
       {
-        double dist = player.location().distanceTo(loc);
+        double dist = player.location().distanceTo(location_);
         double dist_mod = 1.0 - std::max(0.0, std::min(1.0, dist / dist_range));
         influence = int(double(quantity_) * dist_mod);
       }
       break;
     case RewardType::DIST_TIME:
       {
-        double dist = player.location().distanceTo(loc);
+        double dist = player.location().distanceTo(location_);
         double dist_mod = 1.0 - std::max(0.0, std::min(1.0, dist / dist_range));
         double time_mod = std::min(double(cur_time - last_scanned_) / double(RECOVERY_TIME), 1.0);
         influence = int(double(quantity_) * time_mod * dist_mod);
@@ -58,9 +58,9 @@ int Reward::get_influence(const Player& player, const Location& loc, int minDist
   return influence;
 }
 
-int Reward::value_from_location(const Location& qloc, const Location& rloc) const
+int Reward::value_from_location(const Location& loc) const
 {
-  double dist = qloc.distanceTo(rloc);
+  double dist = loc.distanceTo(location_);
   double reward_percent = pow(((HIT_RADIUS - dist) / HIT_RADIUS), HIT_VALUE_FALLOFF);
 
   // Minimum reward from any hit is always one!

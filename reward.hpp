@@ -57,23 +57,21 @@ public:
 
   /** @brief Obtain the influence that this reward is exerting on the given player.
     * @param player   Player whom is performing the scan.
-    * @param loc      Location of this reward.
     * @param minDist  Minimum distance for this scan.
     * @param maxDist  Maximum distance for this scan.
     * @return Influence value.
     */
-  int get_influence(const Player& player, const Location& loc, int minDist, int maxDist);
+  int get_influence(const Player& player, int minDist, int maxDist);
 
   /** @brief Obtains the value of this reward given that it was "hit" by a player
     *        at the provided location. The goal of this mechanic is to allow a player
     *        to obtain a portion of a reward based on how accurately they guessed the
     *        location.
-    * @param qloc Location from which the value of this reward is being queried.
-    * @param rloc Location of this reward.
+    * @param loc Location from which the value of this reward is being queried.
     * @return Value of the reward as seen from the provided location. 
     *         Always in the range [0, quantity_].
     */
-  int value_from_location(const Location& qloc, const Location& rloc) const;
+  int value_from_location(const Location& loc) const;
 
   // Accessors
 

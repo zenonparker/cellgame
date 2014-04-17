@@ -70,8 +70,8 @@ InfluenceRing Grid::scan_single_ring(const Player& player, int minDist, int maxD
 
   // Obtain vector of possible rewards based on the rectangle around the player's
   // location that encompasses the largest scan ring.
-  Location bottom_left{ploc.x - maxDist, ploc.y - maxDist};
-  Location top_right{ploc.x + maxDist, ploc.y + maxDist};
+  Location bottom_left(ploc.x - maxDist, ploc.y - maxDist);
+  Location top_right(ploc.x + maxDist, ploc.y + maxDist);
   auto potential_rewards = reward_grid_.find(bottom_left, top_right);
 
   for (auto& reward_pair : potential_rewards) {
@@ -95,7 +95,7 @@ InfluenceRing Grid::scan_single_ring(const Player& player, int minDist, int maxD
       //              slice index 0 = (0 + 1)/2 = 0.5 % 8 = zeroth slice. (east)
       //              slice index 1 = (1 + 1)/2 = 1 % 8 = index 1 slice (north-east)
       result.vals()[ ((slice + 1) / 2) % InfluenceRing::NUM_DIRECTIONS ] += 
-        reward_pair.second->get_influence(player, loc, minDist, maxDist);
+        reward_pair.second->get_influence(player, minDist, maxDist);
     }
   }
 

@@ -40,8 +40,7 @@ public:
 
   /// The max value for influence in any given direction.
   /// Influence will be in the range [0, MAX_INFLUENCE]
-  static constexpr int MAX_INFLUENCE = INT_MAX;
-  // TODO: WHEN VisualStudio doesn't suck ass: std::numeric_limits<int>::max();
+  static constexpr int MAX_INFLUENCE = std::numeric_limits<int>::max();
 
   // Constructors
   InfluenceRing() { }
