@@ -218,18 +218,18 @@ TEST(CellTests, randScanTest) {
     Grid grid;
     grid.reset_seed(42);
     // This random seed should:
-    // Scan from 17 to 106
-    // Scan from 123 to 984
-    grid.add_reward(make_reward(1, 1, Location(x + 16, y)));
-    grid.add_reward(make_reward(2, 2, Location(x + 18, y)));
-    grid.add_reward(make_reward(3, 3, Location(x, y + 105)));
-    grid.add_reward(make_reward(4, 4, Location(x, y + 107)));
-    grid.add_reward(make_reward(5, 5, Location(x - 122, y)));
-    grid.add_reward(make_reward(6, 6, Location(x - 124, y)));
-    grid.add_reward(make_reward(7, 7, Location(x, y - 983)));
-    grid.add_reward(make_reward(8, 8, Location(x, y - 985)));
-    InfluenceRing ir1(vector<int>{2, 0, 3, 0, 0, 0, 0, 0});
-    InfluenceRing ir2(vector<int>{0, 0, 0, 0, 6, 0, 7, 0});
+    // Scan from 16 to 109
+    // Scan from 103 to 989
+    grid.add_reward(make_reward(1, 1, Location(x + 15, y)));
+    grid.add_reward(make_reward(2, 2, Location(x + 17, y)));
+    grid.add_reward(make_reward(3, 3, Location(x, y + 108)));
+    grid.add_reward(make_reward(4, 4, Location(x, y + 110)));
+    grid.add_reward(make_reward(5, 5, Location(x - 104, y)));
+    grid.add_reward(make_reward(6, 6, Location(x - 102, y)));
+    grid.add_reward(make_reward(7, 7, Location(x, y - 988)));
+    grid.add_reward(make_reward(8, 8, Location(x, y - 990)));
+    InfluenceRing ir1(vector<int>{2, 0, 3, 0, 11, 0, 0, 0});
+    InfluenceRing ir2(vector<int>{0, 0, 7, 0, 5, 0, 7, 0});
     Scan s = grid.scan_player(p);
     EXPECT_EQ(ir1, s.rings()[0]);
     EXPECT_EQ(ir2, s.rings()[1]);
