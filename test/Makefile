@@ -2,7 +2,7 @@
 #                              COMMON SETTINGS                                #
 ###############################################################################
 EXEC_NAME = cell.test.x
-CUSTOM_LD_FLAGS = -lgtest_main -pthread
+CUSTOM_LD_FLAGS = -lgtest_main -lgtest
 CUSTOM_CC_FLAGS = 
 
 OBJS = \
@@ -33,15 +33,15 @@ CUSTOM_INC_DIRS = \
 ###############################################################################
 
 SHELL = bash
-CXX = g++
-CC = gcc
+CXX = clang++
+CC = clang 
 OPT_LEVEL = -O3
 ifdef DEBUG
   OPT_LEVEL = -g
 endif
 CCFLAGS = -c ${OPT_LEVEL} ${CUSTOM_INC_DIRS} -I${BOOST_DIR} -I. \
 					-I${GTEST_DIR}/include ${CUSTOM_CC_FLAGS} -I${CELL_DIR}/test
-CXXFLAGS = $(CCFLAGS) -std=c++11
+CXXFLAGS = $(CCFLAGS) -std=c++1y
 LDFLAGS = -L/usr/local/lib
 
 ###############################################################################
