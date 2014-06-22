@@ -4,6 +4,7 @@
 #include <location.hpp>
 #include <scan.hpp>
 #include <reward.hpp>
+#include <rewardmanager.hpp>
 #include <influence_ring.hpp>
 #include <cell.test.hpp>
 #include <sstream>
@@ -92,5 +93,10 @@ TEST(RewardTests, rewardFalloffTest) {
     EXPECT_EQ(2, r1.value_from_location(qloc2));
     EXPECT_EQ(63, r1.value_from_location(qloc3));
   }
+}
+
+TEST(RewardTests, rewardManagerRedistribution) {
+  RewardManager rm;
+
 }
 
