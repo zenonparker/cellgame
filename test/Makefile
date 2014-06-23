@@ -10,6 +10,7 @@ OBJS = \
 ../scan.o \
 ../reward.o \
 ../rewardmanager.o \
+../rewardclass.o \
 cell.test.o \
 grid_map.test.o \
 grid_multi_map.test.o \
