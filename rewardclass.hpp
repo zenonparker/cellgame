@@ -26,8 +26,10 @@ public:
   /// Distributes a given quantity.
   void distribute_quantity(uint64_t quantity);
 
+  // Accessors
   const uint64_t total_quantity() const { return total_quantity_; }
   uint64_t& total_quantity() { return total_quantity_; }
+  const reward_vec_t& rewards() const { return rewards_; }
 
 private:
 

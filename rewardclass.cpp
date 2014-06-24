@@ -26,11 +26,18 @@ void RewardClass::distribute_quantity(uint64_t quantity)
     uint64_t avg = total_quantity_ / rewards_.size();
     while (quantity > 0 && cur_reward_ != rewards_.end()) {
       if (cur_reward_->quantity() <= avg) {
-        uint64_t dist_amount = std::max(std::max(quantity / 10, uint64_t(1)),
+        // To discourage perfect distribution, if simply adding the entire quantity
+        // to this reward's current quantity would still be under 120% of the average
+        // then simply add it. Otherwise add a 'fair' amount.
+        uint64_t dist_amount = (cur_reward_->quantity() + quantity < (avg + (avg / 5))) ? quantity :
+                                std::max(std::max(quantity / 10, uint64_t(1)),
                                         std::min(quantity, avg - cur_reward_->quantity()));
+        cur_reward_->quantity() += dist_amount;
         total_quantity_ += dist_amount;
         quantity -= dist_amount;
-      } else {
+      }
+      
+      if (cur_reward_->quantity() >= avg) {
         // Only interate to the next reward if this one has met its target.
         ++cur_reward_;
       }

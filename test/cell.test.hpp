@@ -18,6 +18,15 @@ bool areEqual(const std::vector<T>& v1, const std::vector<T>& v2) {
   return true;
 }
 
+template <typename T>
+bool quantitiesEqual(const std::vector<Reward>& v1, const std::vector<T>& v2) {
+  if (v1.size() != v2.size()) return false;
+  for (int i = 0; i < v1.size(); ++i) {
+    if (v1[i].quantity() != v2[i]) return false;
+  }
+  return true;
+}
+
 static Reward make_reward(RewardId id, int quantity) {
   Reward r(id, Reward::RewardType::TRIVIAL);
   r.quantity() = quantity;
